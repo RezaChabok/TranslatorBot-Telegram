@@ -42,15 +42,10 @@ try:
                     speech = gTTS(txt)
                     speech.save("hi.ogg")
                     bot.sendAudio(chat_id, open('hi.ogg', 'rb'), title="")
-                bot.forwardMessage('admin_chat_id', msg['chat']['id'], msg['message_id'])
-                mention="tg://openmessage?user_id={}".format(chat_id)#send to admin users requests with their chat_id mention
-                bot.sendMessage('admin_chat_id',mention)
+                
         else :
-            mention="tg://openmessage?user_id={}".format(chat_id)
-            bot.sendMessage('admin_chat_id',mention)
             bot.sendMessage(chat_id,"ok")
-            bot.forwardMessage('admin_chat_id', msg['chat']['id'], msg['message_id'])
-
+            
 
     app = Flask(__name__)
     @app.route('/{}'.format(secret),methods = ["POST"])
