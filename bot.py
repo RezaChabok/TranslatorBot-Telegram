@@ -27,19 +27,7 @@ try:
                 text=msg["text"]
                 if text == "/start" :
                     bot.sendMessage(chat_id,welcome)
-                elif text[0:4] == '/say':#chat with users 
-                    if chat_id == admin_chat_id:
-                        u_id=''
-                        textlen=0
-                        for i in text[5:20]:
-                            textlen += 1
-                            if i != '|':
-                                u_id += i
-                            if i == '|':
-                                break
-                        u_id=int(u_id)
-                        bot.sendMessage(u_id,text[5 + textlen:])
-                        bot.sendMessage('admin_chat_id',text[5 + textlen:]+"  was sent.")#for example admin send /say user_id |hi and bot send hi to user_id.
+                
                         
                 elif text == "/help" :
                     bot.sendMessage(chat_id,Help)
