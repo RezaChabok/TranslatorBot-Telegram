@@ -4,6 +4,12 @@ from mtranslate import translate
 import urllib3
 import sys
 from gtts import gTTS
+import cv2
+import pytesseract
+def img_convertor(address):
+    img = cv2.imread(address)
+    text = pytesseract.image_to_string(img)
+    return text
 def language (pm):#Automatically detects whether the language of the submitted text is Persian or English
             if pm[0] in alphEn:
                   return 'english'
@@ -42,7 +48,24 @@ try:
                     speech = gTTS(txt)
                     speech.save("hi.ogg")
                     bot.sendAudio(chat_id, open('hi.ogg', 'rb'), title="")
-                
+        
+        elif content_type == 'photo' :
+            try:
+                bot.download_file(msg['photo'][-1]['file_id'], 'file.png')
+                text = img_convertor('file.png')
+                if language(text) == "english" :
+                    bot.sendMessage(chat_id,translate(text,"fa","en"))
+                    speech = gTTS(text)
+                    speech.save("hi.ogg")
+                    bot.sendAudio(chat_id, open('hi.ogg', 'rb'), title="")
+                else :
+                    txt=translate(text,"en","fa")
+                    bot.sendMessage(chat_id,txt)
+                    speech = gTTS(txt)
+                    speech.save("hi.ogg")
+                    bot.sendAudio(chat_id, open('hi.ogg', 'rb'), title="")
+            except :
+                pass
         else :
             bot.sendMessage(chat_id,"ok")
             
